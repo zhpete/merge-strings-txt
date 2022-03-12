@@ -1,18 +1,21 @@
 {
   "name": "merge-strings-txt",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Merge strings.txt files for Frosty",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint src/**/*.js --no-fix"
+    "lint": "eslint src/**/*.js --no-fix",
+    "pkg:win": "npx pkg src/index.js -t latest-win-x64 --output dist/MergeStringsTxt --compress GZip"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.6.0",
-    "eslint-config-airbnb-base": "^15.0.0"
+    "eslint-config-airbnb-base": "^15.0.0",
+    "pkg": "^5.5.2"
   },
   "dependencies": {
-    "lodash.union": "^4.6.0"
+    "lodash.union": "^4.6.0",
+    "yargs": "^17.3.1"
   }
 }
