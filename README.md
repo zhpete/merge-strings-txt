@@ -4,7 +4,7 @@ Merge strings.txt files for Frosty
 
 ## Usage
 
-Download the latest executable from the [releases](/releases) page.
+Download the latest executable from the [releases](https://github.com/zhpete/merge-strings-txt/releases) page.
 Open a terminal and run
 ```sh
 ./path/to/executable/MergeStringsTxt.exe --help
