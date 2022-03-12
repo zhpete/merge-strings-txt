@@ -10,6 +10,11 @@ const {
 const mergeUniqueArrayItems = require('lodash.union');
 const { join: joinPath } = require('path');
 const { createInterface } = require('readline');
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
+const argsOptions = require('./args');
+
+const args = yargs(hideBin(process.argv)).options(argsOptions).argv;
 
 const isTxtFile = (path) => statSync(path).isFile() && path.endsWith('.txt');
 const getFiles = (path) => readdirSync(path)
@@ -44,5 +49,8 @@ const mergeStringsFilesInDirectory = async (dirPath, outputPath) => {
   writeArrayItemsToNewlineDelimitedFile(outputPath, strings.sort());
 };
 
-if (!existsSync('./output')) mkdirSync('./output');
-mergeStringsFilesInDirectory('./', './output/strings.txt');
+const outputSplit = args.output.split(/(?=\\|\/)/);
+outputSplit.pop();
+const outdir = outputSplit.join('');
+if (outdir && !existsSync(outdir)) mkdirSync(outdir, { recursive: true });
+mergeStringsFilesInDirectory(args.input, args.output);

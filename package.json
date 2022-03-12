@@ -1,6 +1,6 @@
 {
   "name": "merge-strings-txt",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Merge strings.txt files for Frosty",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "eslint-config-airbnb-base": "^15.0.0"
   },
   "dependencies": {
-    "lodash.union": "^4.6.0"
+    "lodash.union": "^4.6.0",
+    "yargs": "^17.3.1"
   }
 }
