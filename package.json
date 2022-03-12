@@ -4,13 +4,15 @@
   "description": "Merge strings.txt files for Frosty",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint src/**/*.js --no-fix"
+    "lint": "eslint src/**/*.js --no-fix",
+    "pkg:win": "npx pkg src/index.js -t latest-win-x64 --output dist/MergeStringsTxt --compress GZip"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.6.0",
-    "eslint-config-airbnb-base": "^15.0.0"
+    "eslint-config-airbnb-base": "^15.0.0",
+    "pkg": "^5.5.2"
   },
   "dependencies": {
     "lodash.union": "^4.6.0",
