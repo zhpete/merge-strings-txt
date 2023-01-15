@@ -1,0 +1,103 @@
+name: Create Release
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+permissions:
+  contents: write
+jobs:
+  release-major:
+    name: Create major release
+    if: github.event.pull_request.merged == true && contains(toJson(github.event.pull_request.labels.*.name), 'semver:major')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+      - name: Configure committer
+        run: |
+          git config --global user.email "support+actions@github.com"
+          git config --global user.name "github-actions-bot"
+      - name: Update version number
+        id: version
+        run: |
+          echo "VERSION=$(npm version major)" >> $GITHUB_OUTPUT
+          git push
+      - name: Install NPM dependencies
+        run: npm ci
+      - name: Build .exe
+        run: npm run pkg:win
+      - name: Publish release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/MergeStringsTxt.exe"
+          generateReleaseNotes: true
+          name: ${{ steps.version.outputs.VERSION }}
+          tag: ${{ steps.version.outputs.VERSION }}
+  release-minor:
+    name: Create minor release
+    if: github.event.pull_request.merged == true && contains(toJson(github.event.pull_request.labels.*.name), 'semver:minor')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+      - name: Configure committer
+        run: |
+          git config --global user.email "support+actions@github.com"
+          git config --global user.name "github-actions-bot"
+      - name: Update version number
+        id: version
+        run: |
+          echo "VERSION=$(npm version minor)" >> $GITHUB_OUTPUT
+          git push
+      - name: Install NPM dependencies
+        run: npm ci
+      - name: Build .exe
+        run: npm run pkg:win
+      - name: Publish release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/MergeStringsTxt.exe"
+          generateReleaseNotes: true
+          name: ${{ steps.version.outputs.VERSION }}
+          tag: ${{ steps.version.outputs.VERSION }}
+  release-patch:
+    name: Create patch release
+    if: github.event.pull_request.merged == true && contains(toJson(github.event.pull_request.labels.*.name), 'semver:patch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+      - name: Configure committer
+        run: |
+          git config --global user.email "support+actions@github.com"
+          git config --global user.name "github-actions-bot"
+      - name: Update version number
+        id: version
+        run: |
+          echo "VERSION=$(npm version patch)" >> $GITHUB_OUTPUT
+          git push
+      - name: Install NPM dependencies
+        run: npm ci
+      - name: Build .exe
+        run: npm run pkg:win
+      - name: Publish release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/MergeStringsTxt.exe"
+          generateReleaseNotes: true
+          name: ${{ steps.version.outputs.VERSION }}
+          tag: ${{ steps.version.outputs.VERSION }}
